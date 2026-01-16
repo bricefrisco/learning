@@ -154,15 +154,23 @@ rollCaller() // => should log 'Everyone accounted for'
 
 // CHALLENGE 8
 function saveOutput(func, magicWord) {
+  const obj = {}
   
+  return function(arg) {
+    if (arg === magicWord) {
+      return obj;
+    }
+    obj[arg] = func(arg)
+    return obj[arg] 
+  }
 }
 
 // /*** Uncomment these to check your work! ***/
-// const multiplyBy2 = function(num) { return num * 2; };
-// const multBy2AndLog = saveOutput(multiplyBy2, 'boo');
-// console.log(multBy2AndLog(2)); // => should log 4
-// console.log(multBy2AndLog(9)); // => should log 18
-// console.log(multBy2AndLog('boo')); // => should log { 2: 4, 9: 18 }
+const multiplyBy2 = function(num) { return num * 2; };
+const multBy2AndLog = saveOutput(multiplyBy2, 'boo');
+console.log(multBy2AndLog(2)); // => should log 4
+console.log(multBy2AndLog(9)); // => should log 18
+console.log(multBy2AndLog('boo')); // => should log { 2: 4, 9: 18 }
 
 
 // CHALLENGE 9
