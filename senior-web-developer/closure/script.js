@@ -1,4 +1,4 @@
-// CHALLENGE 1
+console.log('--- CHALLENGE 1 --- ');
 function createFunction() {
 	function inner() {
     console.log('hello');
@@ -11,7 +11,7 @@ const function1 = createFunction();
 function1(); // => should console.log('hello');
 
 
-// CHALLENGE 2
+console.log('--- CHALLENGE 2 --- ');
 function createFunctionPrinter(input) {
 	function inner() {
     console.log(input);
@@ -26,7 +26,7 @@ const printHello = createFunctionPrinter('hello');
 printHello(); // => should console.log('hello');
 
 
-// CHALLENGE 3
+console.log('--- CHALLENGE 3 --- ');
 function outer() {
   let counter = 0; // this variable is outside incrementCounter's scope
   function incrementCounter () {
@@ -71,7 +71,8 @@ console.log('addByFour 4', addByFour(4)); // => should return 8
 console.log('addByFour 5', addByFour(5)); // => should return 9
 
 
-// CHALLENGE 4
+console.log('--- CHALLENGE 4 --- ');
+
 function once(func) {
   let run = false;
   let result = null;
@@ -92,7 +93,7 @@ console.log(onceFunc(10));  // => should log 6
 console.log(onceFunc(9001));  // => should log 6
 
 
-// CHALLENGE 5
+console.log('--- CHALLENGE 5 --- ');
 function after(count, func) {
   let invocations = 0
 	return function(args) {
@@ -110,7 +111,7 @@ afterCalled(); // => nothing is printed
 afterCalled(); // => 'hello' is printed
 
 
-// CHALLENGE 6
+console.log('--- CHALLENGE 6 --- ');
 function delay(func, wait) {
   let waitOver = false;
   setTimeout(function() {
@@ -124,14 +125,14 @@ function delay(func, wait) {
   }
 }
 
-const logWithDelay = delay(() => console.log('hi'), 200);
+const logWithDelay = delay(() => console.log('hi delayed from challenge 6'), 200);
 logWithDelay();
 setTimeout(() => {
   logWithDelay();
 }, 500)
 
 
-// CHALLENGE 7
+console.log('--- CHALLENGE 7 --- ');
 function rollCall(names) {
   let idx = 0;
   return function() {
@@ -152,7 +153,7 @@ rollCaller() // => should log 'Ruth'
 rollCaller() // => should log 'Everyone accounted for'
 
 
-// CHALLENGE 8
+console.log('--- CHALLENGE 8 --- ');
 function saveOutput(func, magicWord) {
   const obj = {}
   
@@ -173,113 +174,189 @@ console.log(multBy2AndLog(9)); // => should log 18
 console.log(multBy2AndLog('boo')); // => should log { 2: 4, 9: 18 }
 
 
-// CHALLENGE 9
+console.log('--- CHALLENGE 9 --- ');
 function cycleIterator(array) {
-
+  let index = 0
+	return function() {
+    if (index === array.length) {
+      index = 0
+    }
+    
+    const result = array[index]
+    index++
+    return result
+  }
 }
 
 // /*** Uncomment these to check your work! ***/
-// const threeDayWeekend = ['Fri', 'Sat', 'Sun'];
-// const getDay = cycleIterator(threeDayWeekend);
-// console.log(getDay()); // => should log 'Fri'
-// console.log(getDay()); // => should log 'Sat'
-// console.log(getDay()); // => should log 'Sun'
-// console.log(getDay()); // => should log 'Fri'
+const threeDayWeekend = ['Fri', 'Sat', 'Sun'];
+const getDay = cycleIterator(threeDayWeekend);
+console.log(getDay()); // => should log 'Fri'
+console.log(getDay()); // => should log 'Sat'
+console.log(getDay()); // => should log 'Sun'
+console.log(getDay()); // => should log 'Fri'
 
 
-// CHALLENGE 10
+console.log('--- CHALLENGE 10 --- ');
 function defineFirstArg(func, arg) {
-
+  return function(arg2) {
+    return func(arg, arg2)
+  }
 }
 
 // /*** Uncomment these to check your work! ***/
-// const subtract = function(big, small) { return big - small; };
-// const subFrom20 = defineFirstArg(subtract, 20);
-// console.log(subFrom20(5)); // => should log 15
+const subtract = function(big, small) { return big - small; };
+const subFrom20 = defineFirstArg(subtract, 20);
+console.log(subFrom20(5)); // => should log 15
 
 
-// CHALLENGE 11
+console.log('--- CHALLENGE 11 --- ');
 function dateStamp(func) {
-
+  return function(args) {
+    const output = {}
+    const date = new Date();
+    const dateStr = date.toDateString();
+    output['date'] = dateStr
+    output['output'] = func(args)
+    return output
+  }
 }
 
 // /*** Uncomment these to check your work! ***/
-// const stampedMultBy2 = dateStamp(n => n * 2);
-// console.log(stampedMultBy2(4)); // => should log { date: (today's date), output: 8 }
-// console.log(stampedMultBy2(6)); // => should log { date: (today's date), output: 12 }
+const stampedMultBy2 = dateStamp(n => n * 2);
+console.log(stampedMultBy2(4)); // => should log { date: (today's date), output: 8 }
+console.log(stampedMultBy2(6)); // => should log { date: (today's date), output: 12 }
 
 
-// CHALLENGE 12
+console.log('--- CHALLENGE 12 --- ');
 function censor() {
-
+  const pairs = {}
+	return function(str1, str2) {
+    if (str1 && str2) {
+      pairs[str1] = str2
+    } else {
+      for (const [key, value] of Object.entries(pairs)) {
+        str1 = str1.replaceAll(key, value)
+      }
+      return str1
+    }
+  }
 }
 
 // /*** Uncomment these to check your work! ***/
-// const changeScene = censor();
-// changeScene('dogs', 'cats');
-// changeScene('quick', 'slow');
-// console.log(changeScene('The quick, brown fox jumps over the lazy dogs.')); // => should log 'The slow, brown fox jumps over the lazy cats.'
+const changeScene = censor();
+changeScene('dogs', 'cats');
+changeScene('quick', 'slow');
+console.log(changeScene('The quick, brown fox jumps over the lazy dogs.')); // => should log 'The slow, brown fox jumps over the lazy cats.'
 
 
-// CHALLENGE 13
-function createSecretHolder(secret) {
-
+console.log('--- CHALLENGE 13 --- ');
+function createSecretHolder(secret) { 
+  return {
+    getSecret: function() {
+      return secret
+    },
+    setSecret: function(newSecret) {
+      secret = newSecret
+    }
+  }
 }
 
 // /*** Uncomment these to check your work! ***/
-// obj = createSecretHolder(5)
-// obj.getSecret() // => returns 5
-// obj.setSecret(2)
-// obj.getSecret() // => returns 2
+obj = createSecretHolder(5)
+console.log(obj.getSecret()) // => returns 5
+obj.setSecret(2);
+console.log(obj.getSecret()) // => returns 2
 
 
-// CHALLENGE 14
+console.log('--- CHALLENGE 14 --- ');
 function callTimes() {
-
+  let count = 0;
+  return function() {
+    return ++count;
+  }
 }
 
 // /*** Uncomment these to check your work! ***/
-// let myNewFunc1 = callTimes();
-// let myNewFunc2 = callTimes();
-// myNewFunc1(); // => 1
-// myNewFunc1(); // => 2
-// myNewFunc2(); // => 1
-// myNewFunc2(); // => 2
+let myNewFunc1 = callTimes();
+let myNewFunc2 = callTimes();
+console.log(myNewFunc1()); // => 1
+console.log(myNewFunc1()); // => 2
+console.log(myNewFunc2()); // => 1
+console.log(myNewFunc2()); // => 2
 
 
-// CHALLENGE 15
+console.log('--- CHALLENGE 15 --- ');
 function roulette(num) {
-
+	let spins = 0
+  return function() {
+    spins += 1
+    if (spins < num) {
+      return 'spin';
+    } else if (spins > num) {
+      return 'pick a number to play again'
+    } else {
+      return 'win'
+    }
+  }
 }
 
 // /*** Uncomment these to check your work! ***/
-// const play = roulette(3);
-// console.log(play()); // => should log 'spin'
-// console.log(play()); // => should log 'spin'
-// console.log(play()); // => should log 'win'
-// console.log(play()); // => should log 'pick a number to play again'
-// console.log(play()); // => should log 'pick a number to play again'
+const play = roulette(3);
+console.log(play()); // => should log 'spin'
+console.log(play()); // => should log 'spin'
+console.log(play()); // => should log 'win'
+console.log(play()); // => should log 'pick a number to play again'
+console.log(play()); // => should log 'pick a number to play again'
 
 
-// CHALLENGE 16
+console.log('--- CHALLENGE 16 --- ');
 function average() {
-
+  let length = 0;
+  let sum = 0;
+  return function(num) {
+    if (num) {
+      sum += num
+    	length += 1 
+    }
+    return sum / length || 0;
+  }
 }
 
 // /*** Uncomment these to check your work! ***/
-// const avgSoFar = average();
-// console.log(avgSoFar()); // => should log 0
-// console.log(avgSoFar(4)); // => should log 4
-// console.log(avgSoFar(8)); // => should log 6
-// console.log(avgSoFar()); // => should log 6
-// console.log(avgSoFar(12)); // => should log 8
-// console.log(avgSoFar()); // => should log 8
+const avgSoFar = average();
+console.log(avgSoFar()); // => should log 0
+console.log(avgSoFar(4)); // => should log 4
+console.log(avgSoFar(8)); // => should log 6
+console.log(avgSoFar()); // => should log 6
+console.log(avgSoFar(12)); // => should log 8
+console.log(avgSoFar()); // => should log 8
 
 
-// CHALLENGE 17
+console.log('--- CHALLENGE 17 --- ');
 function makeFuncTester(arrOfTests) {
-  
+  let count = 0
+  return function(cb) {
+    const arg = arrOfTests[count][0]
+  	const expected = arrOfTests[count][1]
+    
+    const result = cb(arg) === expected
+    count++;
+    return result;
+  }
 }
+
+// /*** Uncomment these to check your work! ***/
+const capLastTestCases = [];
+capLastTestCases.push(['hello', 'hellO']);
+capLastTestCases.push(['goodbye', 'goodbyE']);
+capLastTestCases.push(['howdy', 'howdY']);
+const shouldCapitalizeLast = makeFuncTester(capLastTestCases);
+const capLastAttempt1 = str => str.toUpperCase();
+const capLastAttempt2 = str => str.slice(0, -1) + str.slice(-1).toUpperCase();
+console.log(shouldCapitalizeLast(capLastAttempt1)); // => should log false
+console.log(shouldCapitalizeLast(capLastAttempt2)); // => should log true
+console.log(shouldCapitalizeLast(capLastAttempt2)); // => should log true
 
 // /*** Uncomment these to check your work! ***/
 // const capLastTestCases = [];
@@ -293,58 +370,31 @@ function makeFuncTester(arrOfTests) {
 // console.log(shouldCapitalizeLast(capLastAttempt2)); // => should log true
 
 
-// CHALLENGE 18
+console.log('--- CHALLENGE 18 --- ');
 function makeHistory(limit) {
-
+  const elements = []
+	return function(str) {
+    if (str === 'undo') {
+      const elem = elements.pop();
+      if (!elem) {
+        return 'nothing to undo'
+      }
+      return `${elem} undone`
+    }
+    
+    elements.push(str)
+    return `${str} done`
+  }
 }
 
 // /*** Uncomment these to check your work! ***/
-// const myActions = makeHistory(2);
-// console.log(myActions('jump')); // => should log 'jump done'
-// console.log(myActions('undo')); // => should log 'jump undone'
-// console.log(myActions('walk')); // => should log 'walk done'
-// console.log(myActions('code')); // => should log 'code done'
-// console.log(myActions('pose')); // => should log 'pose done'
-// console.log(myActions('undo')); // => should log 'pose undone'
-// console.log(myActions('undo')); // => should log 'code undone'
-// console.log(myActions('undo')); // => should log 'nothing to undo'
-
-
-// CHALLENGE 19
-function blackjack(array) {
-
-}
-
-// /*** Uncomment these to check your work! ***/
-
-// /*** DEALER ***/
-// const deal = blackjack([2, 6, 1, 7, 11, 4, 6, 3, 9, 8, 9, 3, 10, 4, 5, 3, 7, 4, 9, 6, 10, 11]);
-
-// /*** PLAYER 1 ***/
-// const i_like_to_live_dangerously = deal(4, 5);
-// console.log(i_like_to_live_dangerously()); // => should log 9
-// console.log(i_like_to_live_dangerously()); // => should log 11
-// console.log(i_like_to_live_dangerously()); // => should log 17
-// console.log(i_like_to_live_dangerously()); // => should log 18
-// console.log(i_like_to_live_dangerously()); // => should log 'bust'
-// console.log(i_like_to_live_dangerously()); // => should log 'you are done!'
-// console.log(i_like_to_live_dangerously()); // => should log 'you are done!'
-
-// /*** BELOW LINES ARE FOR THE BONUS ***/
-
-// /*** PLAYER 2 ***/
-// const i_TOO_like_to_live_dangerously = deal(2, 2);
-// console.log(i_TOO_like_to_live_dangerously()); // => should log 4
-// console.log(i_TOO_like_to_live_dangerously()); // => should log 15
-// console.log(i_TOO_like_to_live_dangerously()); // => should log 19
-// console.log(i_TOO_like_to_live_dangerously()); // => should log 'bust'
-// console.log(i_TOO_like_to_live_dangerously()); // => should log 'you are done!
-// console.log(i_TOO_like_to_live_dangerously()); // => should log 'you are done!
-
-// /*** PLAYER 3 ***/
-// const i_ALSO_like_to_live_dangerously = deal(3, 7);
-// console.log(i_ALSO_like_to_live_dangerously()); // => should log 10
-// console.log(i_ALSO_like_to_live_dangerously()); // => should log 13
-// console.log(i_ALSO_like_to_live_dangerously()); // => should log 'bust'
-// console.log(i_ALSO_like_to_live_dangerously()); // => should log 'you are done!
-// console.log(i_ALSO_like_to_live_dangerously()); // => should log 'you are done!
+const myActions = makeHistory(2);
+console.log(myActions('jump')); // => should log 'jump done'
+console.log(myActions('undo')); // => should log 'jump undone'
+console.log(myActions('walk')); // => should log 'walk done'
+console.log(myActions('code')); // => should log 'code done'
+console.log(myActions('pose')); // => should log 'pose done'
+console.log(myActions('undo')); // => should log 'pose undone'
+console.log(myActions('undo')); // => should log 'code undone'
+console.log(myActions('undo')); // => should log 'walk undone'
+console.log(myActions('undo')); // => should log 'nothing to undo'
